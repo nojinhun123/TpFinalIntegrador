@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import Layout from './components/Layout'
@@ -6,6 +7,7 @@ import NewTransaction from './pages/NewTransaction'
 import EditTransaction from './pages/EditTransaction'
 import Summary from './pages/Summary'
 import Settings from './pages/Settings'
+
 
 function App() {
   return (
