@@ -86,17 +86,17 @@ const Home = () => {
   }
 
   return (
-    <div className="space-y-6 pb-20">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <div className="w-full space-y-8 sm:space-y-10 pb-24 animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
+        <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
           Mis Movimientos
         </h2>
-        <div className={`px-4 py-2 rounded-lg font-semibold ${
+        <div className={`px-5 py-2.5 rounded-xl font-bold shadow-md ${
           isDark 
-            ? 'bg-blue-900/30 text-blue-300 border border-blue-700' 
-            : 'bg-blue-100 text-blue-700 border border-blue-200'
+            ? 'bg-blue-900/40 text-blue-300 border-2 border-blue-700/50' 
+            : 'bg-blue-100 text-blue-700 border-2 border-blue-200'
         }`}>
-          📊 {filteredTransactions.length} {filteredTransactions.length === 1 ? 'movimiento' : 'movimientos'}
+          {filteredTransactions.length} {filteredTransactions.length === 1 ? 'movimiento' : 'movimientos'}
         </div>
       </div>
 

@@ -52,7 +52,7 @@ const EditTransaction = () => {
   if (!transaction) {
     return (
       <div className={`text-center py-16 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'} shadow-lg`}>
-        <div className="text-7xl mb-6 animate-spin">⏳</div>
+        <div className="mb-6 animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
         <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Cargando...</h3>
         <p className="text-gray-600 dark:text-gray-400">Espera un momento</p>
       </div>
@@ -60,15 +60,22 @@ const EditTransaction = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pb-20">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Editar Movimiento
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 text-lg">Modifica los datos del movimiento seleccionado</p>
-      </div>
+    <div className="w-full pb-24 animate-fade-in">
+      <div>
+        <div className="mb-10">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Editar Movimiento
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl">
+            Modifica los datos del movimiento seleccionado
+          </p>
+        </div>
 
-      <div className={`p-8 rounded-xl shadow-lg ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+        <div className={`p-8 sm:p-10 lg:p-12 rounded-2xl backdrop-blur-sm shadow-2xl animate-scale-in ${
+        isDark 
+          ? 'bg-gray-800/70 border border-gray-700/50' 
+          : 'bg-white/80 border border-gray-200/50'
+      }`}>
         <Formik
           initialValues={{
             description: transaction.description,
@@ -80,55 +87,69 @@ const EditTransaction = () => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form className="space-y-6">
+          {({ isSubmitting, errors, touched }) => (
+            <Form className="space-y-7">
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                  📝 Descripción
+                <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300">
+                  Descripción
                 </label>
                 <Field
                   name="description"
                   type="text"
                   placeholder="Ej: Compra en supermercado"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    isDark
-                      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                    errors.description && touched.description
+                      ? 'border-red-500 focus:ring-red-500'
+                      : isDark
+                      ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500'
+                      : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500'
                   }`}
                 />
-                <ErrorMessage name="description" component="div" className="text-red-500 dark:text-red-400 text-sm mt-2 font-medium" />
+                <ErrorMessage 
+                  name="description" 
+                  component="div" 
+                  className="text-red-500 dark:text-red-400 text-sm mt-2 font-semibold" 
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                  📊 Tipo
+                <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300">
+                  Tipo
                 </label>
                 <Field
                   name="type"
                   as="select"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    isDark
-                      ? 'bg-gray-700 border-gray-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
+                  className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer ${
+                    errors.type && touched.type
+                      ? 'border-red-500 focus:ring-red-500'
+                      : isDark
+                      ? 'bg-gray-700/50 border-gray-600 text-white focus:border-blue-500'
+                      : 'bg-white/90 border-gray-300 text-gray-900 focus:border-blue-500'
                   }`}
                 >
-                  <option value="gasto">💸 Gasto</option>
-                  <option value="ingreso">💰 Ingreso</option>
+                  <option value="gasto">Gasto</option>
+                  <option value="ingreso">Ingreso</option>
                 </Field>
-                <ErrorMessage name="type" component="div" className="text-red-500 dark:text-red-400 text-sm mt-2 font-medium" />
+                <ErrorMessage 
+                  name="type" 
+                  component="div" 
+                  className="text-red-500 dark:text-red-400 text-sm mt-2 font-semibold" 
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                  🏷️ Categoría
+                <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300">
+                  Categoría
                 </label>
                 <Field
                   name="category"
                   as="select"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    isDark
-                      ? 'bg-gray-700 border-gray-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
+                  className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer ${
+                    errors.category && touched.category
+                      ? 'border-red-500 focus:ring-red-500'
+                      : isDark
+                      ? 'bg-gray-700/50 border-gray-600 text-white focus:border-blue-500'
+                      : 'bg-white/90 border-gray-300 text-gray-900 focus:border-blue-500'
                   }`}
                 >
                   <option value="">Selecciona una categoría</option>
@@ -138,62 +159,79 @@ const EditTransaction = () => {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="category" component="div" className="text-red-500 dark:text-red-400 text-sm mt-2 font-medium" />
+                <ErrorMessage 
+                  name="category" 
+                  component="div" 
+                  className="text-red-500 dark:text-red-400 text-sm mt-2 font-semibold" 
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                  💵 Monto
+                <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300">
+                  Monto
                 </label>
                 <Field
                   name="amount"
                   type="number"
                   step="0.01"
                   placeholder="0.00"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    isDark
-                      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                    errors.amount && touched.amount
+                      ? 'border-red-500 focus:ring-red-500'
+                      : isDark
+                      ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500'
+                      : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500'
                   }`}
                 />
-                <ErrorMessage name="amount" component="div" className="text-red-500 dark:text-red-400 text-sm mt-2 font-medium" />
+                <ErrorMessage 
+                  name="amount" 
+                  component="div" 
+                  className="text-red-500 dark:text-red-400 text-sm mt-2 font-semibold" 
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                  📅 Fecha
+                <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300">
+                  Fecha
                 </label>
                 <Field
                   name="date"
                   type="date"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                    isDark
-                      ? 'bg-gray-700 border-gray-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
+                  className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                    errors.date && touched.date
+                      ? 'border-red-500 focus:ring-red-500'
+                      : isDark
+                      ? 'bg-gray-700/50 border-gray-600 text-white focus:border-blue-500'
+                      : 'bg-white/90 border-gray-300 text-gray-900 focus:border-blue-500'
                   }`}
                 />
-                <ErrorMessage name="date" component="div" className="text-red-500 dark:text-red-400 text-sm mt-2 font-medium" />
+                <ErrorMessage 
+                  name="date" 
+                  component="div" 
+                  className="text-red-500 dark:text-red-400 text-sm mt-2 font-semibold" 
+                />
               </div>
 
-              <div className="flex space-x-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-5 pt-8">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 transition-all transform hover:scale-105 shadow-lg font-semibold"
+                  className="flex-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-5 px-8 rounded-xl hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-purple-500/30 font-bold text-lg"
                 >
-                  {isSubmitting ? '⏳ Guardando...' : '✅ Actualizar Movimiento'}
+                  {isSubmitting ? 'Guardando...' : 'Actualizar Movimiento'}
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate('/')}
-                  className="flex-1 bg-gray-500 text-white py-3 px-6 rounded-xl hover:bg-gray-600 transition-all transform hover:scale-105 shadow-lg font-semibold"
+                  className="flex-1 bg-gray-500 text-white py-5 px-8 rounded-xl hover:bg-gray-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg font-bold text-lg"
                 >
-                  ❌ Cancelar
+                  Cancelar
                 </button>
               </div>
             </Form>
           )}
         </Formik>
+        </div>
       </div>
     </div>
   )
